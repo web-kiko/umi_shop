@@ -91,8 +91,11 @@ const Login: React.FC<LoginProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message:"请输出入邮箱"
-                
+                  message:"请输入邮箱"
+                },
+                {
+                  type: 'email',
+                  message:"请输入正确的邮箱格式"
                 },
               ]}
             />

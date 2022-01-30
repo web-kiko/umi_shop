@@ -48,8 +48,10 @@ const UserModel: UserModelType = {
         payload: response,
       });
     },
+    //获取用户信息
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
+      console.log(response);
       yield put({
         type: 'saveCurrentUser',
         payload: response,
