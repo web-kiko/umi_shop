@@ -63,6 +63,7 @@ const Login: React.FC<LoginProps> = (props) => {
         }}
         onFinish={(values) => {
           handleSubmit(values );
+          // console.log(values)
           return Promise.resolve();
         }}
       >
@@ -86,7 +87,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />,
               }}
-              placeholder="super@a.com"
+              placeholder="邮箱：super@a.com"
               rules={[
                 {
                   required: true,
@@ -101,7 +102,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 size: 'large',
                 prefix: <LockOutlined className={styles.prefixIcon} />,
               }}
-              placeholder="123123"
+              placeholder="密码：123123"
               rules={[
                 {
                   required: true,

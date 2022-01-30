@@ -56,6 +56,7 @@ const errorHandler = async (error: { response:any}) => {
 const request = extend({
   errorHandler, // default error handling
   credentials: 'include', // Does the default request bring cookies
+  prefix:'/api'
 });
 /**
  * 请求拦截器，再请求之前加上header头
