@@ -5,12 +5,11 @@ import {
   
 } from '@ant-design/icons';
 import { Alert,  Tabs } from 'antd';
-import React, { useState } from 'react';
+import React, {  } from 'react';
 import ProForm, {  ProFormText } from '@ant-design/pro-form';
-import { useIntl, connect, FormattedMessage } from 'umi';
+import { useIntl, connect, } from 'umi';
 import type { Dispatch } from 'umi';
 import type { StateType } from '@/models/login';
-import type { LoginParamsType } from '@/services/login';
 import type { ConnectState } from '@/models/connect';
 
 import styles from './index.less';
@@ -36,15 +35,14 @@ const LoginMessage: React.FC<{
 
 const Login: React.FC<LoginProps> = (props) => {
   const { userLogin = {}, submitting } = props;
-  const { status, type: loginType } = userLogin;
-  const [type, setType] = useState<string>('account');
+  const { status,  } = userLogin; 
   const intl = useIntl();
 
-  const handleSubmit = (values: LoginParamsType) => {
+  const handleSubmit = (values:any) => {
     const { dispatch } = props;
     dispatch({
       type: 'login/login',
-      payload: { ...values, type },
+      payload: { ...values },
     });
   };
   return (
@@ -64,49 +62,36 @@ const Login: React.FC<LoginProps> = (props) => {
           },
         }}
         onFinish={(values) => {
-          handleSubmit(values as LoginParamsType);
+          handleSubmit(values );
           return Promise.resolve();
         }}
       >
-        <Tabs activeKey={type} onChange={setType}>
+        <Tabs activeKey="account">
           <Tabs.TabPane
             key="account"
-            tab={intl.formatMessage({
-              id: 'pages.login.accountLogin.tab',
-              defaultMessage: 'Account password login',
-            })}
+            tab="账号密码登录"
           />
           
         </Tabs>
 
         {status === 'error' &&  !submitting && (
           <LoginMessage
-            content={intl.formatMessage({
-              id: 'pages.login.accountLogin.errorMessage',
-              defaultMessage: 'Incorrect account or password（admin/ant.design)',
-            })}
+            content="账号密码登录"
           />
         )}
       
             <ProFormText
-              name="userName"
+              name="email"
               fieldProps={{
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />,
               }}
-              placeholder={intl.formatMessage({
-                id: 'pages.login.username.placeholder',
-                defaultMessage: 'Username: admin or user',
-              })}
+              placeholder="super@a.com"
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.username.required"
-                      defaultMessage="Please enter user name!"
-                    />
-                  ),
+                  message:"请输出入邮箱"
+                
                 },
               ]}
             />
@@ -116,19 +101,11 @@ const Login: React.FC<LoginProps> = (props) => {
                 size: 'large',
                 prefix: <LockOutlined className={styles.prefixIcon} />,
               }}
-              placeholder={intl.formatMessage({
-                id: 'pages.login.password.placeholder',
-                defaultMessage: 'Password: ant.design',
-              })}
+              placeholder="123123"
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.password.required"
-                      defaultMessage="Please enter password！"
-                    />
-                  ),
+                  message:"请输入密码"
                 },
               ]}
             />
