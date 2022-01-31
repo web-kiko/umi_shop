@@ -5,10 +5,10 @@ import {
   
 } from '@ant-design/icons';
 import { Alert,  Tabs } from 'antd';
-import React, {  } from 'react';
+import React, {useEffect  } from 'react';
 import ProForm, {  ProFormText } from '@ant-design/pro-form';
-import { useIntl, connect, } from 'umi';
-import type { Dispatch } from 'umi';
+import { useIntl, connect,history } from 'umi';
+import type { Dispatch} from 'umi';
 import type { StateType } from '@/models/login';
 import type { ConnectState } from '@/models/connect';
 
@@ -33,7 +33,12 @@ const LoginMessage: React.FC<{
   />
 );
 
-const Login: React.FC<LoginProps> = (props) => {
+const Login = (props:any) => {
+    useEffect(()=>{
+      //如果已经登陆，直接去首页
+      const userInfo = localStorage.getItem("userInfo")
+      if(userInfo) history.replace('/')
+    },[])
   const { userLogin = {}, submitting } = props;
   const { status,  } = userLogin; 
   const intl = useIntl();

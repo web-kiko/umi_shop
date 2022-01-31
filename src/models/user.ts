@@ -74,21 +74,7 @@ const UserModel: UserModelType = {
         currentUser: action.payload || {},
       };
     },
-    changeNotifyCount(
-      state = {
-        currentUser: {},
-      },
-      action,
-    ) {
-      return {
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          notifyCount: action.payload.totalCount,
-          unreadCount: action.payload.unreadCount,
-        },
-      };
-    },
+  
   },
 };
 
