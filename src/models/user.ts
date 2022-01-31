@@ -49,9 +49,17 @@ const UserModel: UserModelType = {
       });
     },
     //获取用户信息
-    *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
-      console.log(response);
+    *fetchCurrent(_, { call, put }) { 
+      const userInfo =localStorage.getItem("userInfo")
+      let response ={}
+      if(!userInfo){
+        response = yield call(queryCurrent);
+        localStorage.setItem("userInfo",JSON.stringify(response))
+      }else{
+        response=JSON.parse(userInfo)
+      }
+     console.log(response);
+     
       yield put({
         type: 'saveCurrentUser',
         payload: response,
