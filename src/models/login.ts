@@ -1,7 +1,15 @@
+/*
+ * @Author: your name
+ * @Date: 2022-01-27 22:17:33
+ * @LastEditTime: 2022-02-01 02:27:04
+ * @LastEditors: your name
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \umi_shop\src\models\login.ts
+ */
 import { stringify } from 'querystring';
 import type { Reducer, Effect } from 'umi';
 import { history } from 'umi';
-import { fakeAccountLogin } from '@/services/login';
+import { fakeAccountLogin,logout } from '@/services/login';
 import { getPageQuery } from '@/utils/utils';
 import { message } from 'antd';
 
@@ -45,17 +53,19 @@ const Model: LoginModelType = {
       history.replace( '/');
       }
     },
-
-    logout() {
-      const { redirect } = getPageQuery();
-      // Note: There may be security issues, please note
-      if (window.location.pathname !== '/user/login' && !redirect) {
-        history.replace({
-          pathname: '/user/login',
-          search: stringify({
-            redirect: window.location.href,
-          }),
-        });
+    
+    /**
+     * 请求退出登录的api，删除token和userInfo
+     */
+    *logout(_,{call}) {
+      const response = yield call(logout)
+      //判断是否登录成功
+      if(response.status==undefined){
+        //删除token和userInfo
+        localStorage.removeItem("userInfo")
+        localStorage.removeItem("access_token")
+      //重定向登录页
+      history.replace( '/login');
       }
     },
   },
