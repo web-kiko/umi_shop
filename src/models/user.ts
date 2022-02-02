@@ -1,6 +1,14 @@
+/*
+ * @Author: your name
+ * @Date: 2022-01-27 22:17:33
+ * @LastEditTime: 2022-02-03 02:06:21
+ * @LastEditors: your name
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \umi_shop\src\models\user.ts
+ */
 import type { Effect, Reducer } from 'umi';
 
-import { queryCurrent, query as queryUsers } from '@/services/user';
+import { queryCurrent,} from '@/services/user';
 
 export type CurrentUser = {
   avatar?: string;

@@ -1,16 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2022-01-27 22:17:33
- * @LastEditTime: 2022-02-01 02:27:04
- * @LastEditors: your name
+ * @LastEditTime: 2022-02-01 02:33:50
+ * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \umi_shop\src\models\login.ts
  */
-import { stringify } from 'querystring';
 import type { Reducer, Effect } from 'umi';
 import { history } from 'umi';
 import { fakeAccountLogin,logout } from '@/services/login';
-import { getPageQuery } from '@/utils/utils';
 import { message } from 'antd';
 
 export type StateType = {
@@ -44,12 +42,12 @@ const Model: LoginModelType = {
       console.log(response)
       //判断是否登录成功
       if(response.status==undefined){
+        message.success('登录成功');
         yield put({
           type: 'changeLoginStatus',
           payload: response,
         });
       //跳转到首页
-      message.success('登录成功');
       history.replace( '/');
       }
     },
@@ -61,6 +59,7 @@ const Model: LoginModelType = {
       const response = yield call(logout)
       //判断是否登录成功
       if(response.status==undefined){
+        message.success('退出成功');
         //删除token和userInfo
         localStorage.removeItem("userInfo")
         localStorage.removeItem("access_token")
