@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-01-27 22:17:33
- * @LastEditTime: 2022-02-03 02:22:45
+ * @LastEditTime: 2022-02-04 06:40:19
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \umi_shop\src\locales\zh-CN\menu.ts
@@ -10,6 +10,11 @@ export default {
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页统计',
+  'menu.category': '分类管理',
+  'menu.user': '用户管理',
+  'menu.goods': '商品管理',
+  'menu.comments': '评价管理',
+  'menu.orders': '订单管理',
   'menu.admin': '管理页',
   'menu.admin.sub-page': '二级管理页',
   'menu.login': '登录',
@@ -57,4 +62,5 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
+
 };
