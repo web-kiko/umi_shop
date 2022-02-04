@@ -1,33 +1,72 @@
 /*
  * @Author: your name
  * @Date: 2022-02-04 06:30:56
- * @LastEditTime: 2022-02-04 07:45:13
+ * @LastEditTime: 2022-02-04 20:18:42
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \umi_shop\src\pages\User\index.jsx
  */
 import { PageContainer } from '@ant-design/pro-layout'
-import React from 'react'
-
+import React,{useRef} from 'react'
+import { Button,Avatar,Switch } from 'antd';
+import ProTable from '@ant-design/pro-table';
+import { PlusOutlined,UserOutlined} from '@ant-design/icons';
+import { getUsers } from '@/services/user';
 const User = () => {
-    return (
-    <PageContainer>
-    <ProTable
+    const actionRef = useRef();
+    const columns = [
+        {
+            title:'头像',
+            hideInSearch:true,
+            dataIndex:'avatar_url',
+            render:(_,record)=>(
+                <>
+                <Avatar src={record.avatar_url} size={32} icon={<UserOutlined />} />
+                </>
+            )
+        },
+        {
+            title:'姓名',
+            dataIndex:'name',
+        },
+        {
+            title:'邮箱',
+            dataIndex:'email',
+        },
+        {
+            title:'是否禁用',
+            hideInSearch:true,
+            dataIndex:'is_locked',
+            render:(_,record)=>(
+                <>
+                <Switch
+                    checkedChildren="启用" 
+                    unCheckedChildren="禁用"
+                    defaultChecked={record.is_locked===0} 
+                     onChange={()=>{}}
+                 />
+                </>
+            )
+        },
+        {
+            title:'创建时间',
+            dataIndex:'created_at',
+            hideInSearch:true,
+        },
+        {
+            title:'操作',
+            render:(_,record)=><a onChange={()=>{}}>编辑</a>
+               
+            
+        },
+    ]   
+     return (
+        <PageContainer>
+        <ProTable
       columns={columns}
       actionRef={actionRef}
-      request={async (params = {}, sort, filter) => {
-        console.log(sort, filter);
-        return request('https://proapi.azurewebsites.net/github/issues', {
-          params,
-        });
-      }}
-      editable={{
-        type: 'multiple',
-      }}
-      columnsState={{
-        persistenceKey: 'pro-table-singe-demos',
-        persistenceType: 'localStorage',
-      }}
+      request={async () =>  getUsers() }
+      
       rowKey="id"
       search={{
         labelWidth: 'auto',
@@ -45,22 +84,18 @@ const User = () => {
         },
       }}
       pagination={{
-        pageSize: 5,
+        pageSize: 8,
       }}
       dateFormatter="string"
-      headerTitle="高级表格"
+      headerTitle="用户列表"
       toolBarRender={() => [
         <Button key="button" icon={<PlusOutlined />} type="primary">
           新建
         </Button>,
-        <Dropdown key="menu" overlay={menu}>
-          <Button>
-            <EllipsisOutlined />
-          </Button>
-        </Dropdown>,
+       
       ]}
     />
-    );
+  );
         </PageContainer>
     )
 }
