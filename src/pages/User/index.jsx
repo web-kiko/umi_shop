@@ -1,17 +1,17 @@
 /*
  * @Author: your name
  * @Date: 2022-02-04 06:30:56
- * @LastEditTime: 2022-02-04 21:03:43
+ * @LastEditTime: 2022-02-04 22:22:45
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \umi_shop\src\pages\User\index.jsx
  */
 import { PageContainer } from '@ant-design/pro-layout'
 import React,{useRef} from 'react'
-import { Button,Avatar,Switch } from 'antd';
+import { Button,Avatar,Switch, message } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { PlusOutlined,UserOutlined} from '@ant-design/icons';
-import { getUsers } from '@/services/user';
+import { getUsers,patchLock } from '@/services/user';
 const User = () => {
     const actionRef = useRef();
     const columns = [
@@ -43,7 +43,14 @@ const User = () => {
                     checkedChildren="启用" 
                     unCheckedChildren="禁用"
                     defaultChecked={record.is_locked===0} 
-                     onChange={()=>{}}
+                     onChange={async()=>{
+                       const respones=  await patchLock(record.id)
+                       if(respones.status==undefined){
+                           message.success('操作成功')
+                       }else{
+                           message.error('操作失败')
+                       }
+                     }}
                  />
                 </>
             )
