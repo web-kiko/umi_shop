@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-02-04 06:30:56
- * @LastEditTime: 2022-02-06 16:19:49
+ * @LastEditTime: 2022-02-06 22:39:37
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \umi_shop\src\pages\User\index.jsx
@@ -11,7 +11,7 @@ import React,{useRef,useState} from 'react'
 import { Button,Avatar,Switch, message,Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { PlusOutlined,UserOutlined} from '@ant-design/icons';
-import { getUsers,patchLock,addUser } from '@/services/user';
+import { getUsers,patchLock,addUser,uptateUser } from '@/services/user';
 import ProForm, { ProFormText} from '@ant-design/pro-form';
 const User = () => {
     //ref刷新表格
@@ -66,20 +66,18 @@ const User = () => {
         {
             title:'操作',
             hideInSearch:true,
-            render:(_,record)=><a onChange={()=>{}}>编辑</a>
-               
-            
+            render:(_,record)=><a onClick={()=>openUptateModel()}>编辑</a>  
         },
     ] 
     /**
-     * 打开模态框
+     * 打开新建模态框
      *  */ 
      const openModel=()=>{
         setIsModalVisible(true)
     }
     
     /**
-     * 关闭模态框
+     * 关闭新建模态框
      * 
      */
      
@@ -87,12 +85,42 @@ const User = () => {
         setIsModalVisible(false)
     }
     /**
+     * 打开编辑模态框
+     *  */ 
+     const openUptateModel=()=>{
+        setIsModalVisible(true)
+    }
+    
+    /**
+     * 关闭编辑模态框
+     * 
+     */
+     
+    const colseUptateModel=()=>{
+        setIsModalVisible(false)
+    }
+    
+    /**
      * 发送请求添加用户
      */
     const addUsers= async(values)=>{
         const respones =await addUser(values)
         if(respones.status===undefined){
             message.success('添加成功');
+            //刷新
+            actionRef.current.reload();
+           
+            setIsModalVisible(false);
+           
+        }
+    }
+    /**
+     * 发送请求更新用户
+     */
+     const uptateUsers= async(values)=>{
+        const respones =await uptateUser(upid,values)
+        if(respones.status===undefined){
+            message.success('更新成功');
             //刷新
             actionRef.current.reload();
            
@@ -125,6 +153,7 @@ const User = () => {
       ]}
     />
   );
+ {/* 新建用户 */}
   <Modal title="添加用户" 
          visible={isModalVisible}  
          onCancel={colseModel}
@@ -162,6 +191,45 @@ const User = () => {
               />
         </ ProForm>
       </Modal>
+     {/* 编辑用户 */}
+      <Modal title="编辑用户" 
+         visible={isModalVisible}  
+         onCancel={colseModel}
+         destroyOnClose={true}
+          footer={null}>
+         <ProForm
+              onFinish={ (values) => {
+                addUsers(values)
+                message.success('提交成功');
+              }}
+            >
+             <ProFormText
+                  name="name"
+                  label="昵称"
+                  tooltip="最长为 24 位"
+                  placeholder="请输入昵称"
+                  rules={[{required:true,message:'请输入昵称'}]}
+              />
+               <ProFormText
+                  name="email"
+                  label="邮箱"
+                  tooltip="最长为 24 位"
+                  placeholder="请输入邮箱"
+                  rules={[{required:true,message:'请输入邮箱'},
+                  {type:'email',message:"邮箱格式不正确"}]}
+              />
+               <ProFormText.Password
+                  name="password"
+                  label="密码"
+                  tooltip="最长为 24 位"
+                  placeholder="请输入密码"
+                  rules={[{required:true,message:'请输入密码'},
+                  {min:6,message:"密码不少于6位"}
+                  ]}
+              />
+        </ ProForm>
+      </Modal>
+           
         </PageContainer>
     )
 }

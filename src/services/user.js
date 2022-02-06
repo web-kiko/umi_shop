@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-01-27 22:17:33
- * @LastEditTime: 2022-02-06 15:43:36
+ * @LastEditTime: 2022-02-06 17:33:51
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \umi_shop\src\services\user.js
@@ -24,4 +24,8 @@ export async function patchLock(uid) {
 //添加用户
 export async function addUser(params) {
   return request.post('/admin/users',{params});
+}
+//更新用户
+export async function uptateUser(upid) {
+  return request.post(`/admin/users/${upid}`,{params});
 }
